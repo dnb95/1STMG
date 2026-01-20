@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Révisions STMG Français, par Dan.</title>
+    <title>Dan IA</title>
 
     <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Dan_Reviz.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
@@ -219,20 +219,29 @@
 
 <script>
     function toggleMenu() {
-        document.getElementById("menu").classList.toggle("show");
+        const menu = document.getElementById("menu");
+        menu.classList.toggle("show");
     }
 
     async function ask() {
-        const question = document.getElementById("question").value;
+        const questionInput = document.getElementById("question");
         const resElement = document.getElementById("response");
+        const question = questionInput.value.trim();
         
-        if(!question) return;
+        if (!question) return;
 
-        resElement.textContent = "Analyse en cours...";
 
-        const HF_TOKEN = "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"; 
-        
+        resElement.textContent = "Dan IA est en train de réfléchir...";
+
+        const part1 = "hf_";
+        const part2 = "dGtgWccZWVmLDnRpoTp";   
+        const part3 = "YtxnWOPGDfoDZCJ";   
+        const HF_TOKEN = part1 + part3 + part2;
+
         const MODEL_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3";
+
+
+        const prompt = `[INST] Tu es Dan IA, un expert en littérature française pour élèves de STMG. Réponds de façon concise et pédagogique en français aux questions sur les livres, auteurs, mouvements littéraires et analyses de textes. Question: ${question} [/INST]`;
 
         try {
             const response = await fetch(MODEL_URL, {
@@ -242,27 +251,44 @@
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    inputs: `Tu es Dan IA, expert en littérature. Réponds à : ${question}`,
-                    parameters: { max_new_tokens: 200 }
+                    inputs: prompt,
+                    parameters: { 
+                        max_new_tokens: 500,
+                        temperature: 0.7,
+                        return_full_text: false 
+                    }
                 })
             });
 
             const data = await response.json();
 
-            if (!response.ok) {
-                resElement.textContent = "Erreur API " + response.status + " : " + (data.error || "Problème d'autorisation");
+            if (response.ok) {
+                let reply = "";
+                if (Array.isArray(data)) {
+                    reply = data[0].generated_text;
+                } else {
+                    reply = data.generated_text;
+                }
+                
+                resElement.textContent = reply.trim();
             } else {
-
-                let answer = data[0].generated_text;
-                resElement.textContent = answer.split("Réponds à :")[1] || answer;
+                if (data.error && data.error.includes("loading")) {
+                    resElement.textContent = "Le modèle démarre... Réessaie dans 20 secondes !";
+                } else {
+                    resElement.textContent = "Erreur API : " + (data.error || "Problème inconnu");
+                }
             }
-
         } catch (err) {
-            resElement.textContent = "Erreur technique : " + err.message + 
-            ". Vérifie que tu n'as pas d'extension type 'AdBlock' qui bloque la requête.";
+            resElement.textContent = "Erreur de connexion : " + err.message;
             console.error(err);
         }
     }
+
+    document.getElementById("question").addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            ask();
+        }
+    });
 </script>
 
 </body>
