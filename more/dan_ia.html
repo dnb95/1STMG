@@ -90,48 +90,66 @@
             color: #58a6ff;
         }
 
-        .hamburger {
-            position: absolute;
-            left: 30px;
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            z-index: 2;
-        }
-
-        .hamburger span {
-            background: #c9d1d9;
-            height: 3px;
-            width: 26px;
-            margin: 4px 0;
-            border-radius: 2px;
-        }
-
-        .chat-section {
+    .chat-section {
             max-width: 800px;
             margin: 40px auto;
             padding: 20px;
             background-color: #161b22;
             border-radius: 18px;
             border: 1px solid #30363d;
-            text-align: center;
         }
 
         .chat-section h2 {
             margin-bottom: 20px;
             color: #58a6ff;
+            text-align: center;
+        }
+
+        #chat-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            height: 450px;
+            overflow-y: auto;
+            padding: 15px;
+            background: #0d1117;
+            border-radius: 10px;
+            border: 1px solid #30363d;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 15px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background-color: #238636;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .ai-message {
+            align-self: flex-start;
+            background-color: #30363d;
+            color: #c9d1d9;
+            border-bottom-left-radius: 4px;
         }
 
         .input-container {
             display: flex;
             gap: 10px;
-            margin-bottom: 20px;
         }
 
         input[type="text"] {
             flex: 1;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 14px;
+            border-radius: 10px;
             border: 1px solid #30363d;
             background: #0d1117;
             color: white;
@@ -139,49 +157,32 @@
         }
 
         button.send-btn {
-            padding: 10px 20px;
+            padding: 0 25px;
             background-color: #238636;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: 600;
+            transition: background 0.2s;
         }
 
         button.send-btn:hover {
             background-color: #2ea043;
         }
 
-        #response {
-            text-align: left;
-            background: #0d1117;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #30363d;
-            min-height: 80px;
-            white-space: pre-wrap;
-            font-size: 15px;
-            line-height: 1.6;
+        /* Scrollbar personnalisée */
+        #chat-container::-webkit-scrollbar {
+            width: 6px;
         }
-
-        @media (max-width: 900px) {
-            .grid { grid-template-columns: repeat(2, 1fr); }
+        #chat-container::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 10px;
         }
 
         @media (max-width: 600px) {
-            .menu {
-                display: none;
-                position: absolute;
-                top: 100px;
-                left: 20px;
-                flex-direction: column;
-                background-color: #161b22;
-                padding: 15px;
-                border-radius: 14px;
-                border: 1px solid #30363d;
-            }
-            .menu.show { display: flex; }
-            .hamburger { display: flex; }
+            .menu { display: none; }
+            .chat-section { margin: 10px; }
         }
     </style>
 </head>
@@ -209,33 +210,38 @@
 </header>
 
 <div class="chat-section">
-    <h2>Pose ta question à Dan IA</h2>
+    <h2>Dan IA</h2>
+    
+    <div id="chat-container">
+        <div class="message ai-message">Bonjour ! Quel est ta question ?</div>
+    </div>
+
     <div class="input-container">
-        <input type="text" id="question" placeholder="Ex: Analyse de Germinal...">
+        <input type="text" id="question" placeholder="Posez votre question ici...">
         <button class="send-btn" onclick="ask()">Envoyer</button>
     </div>
-    <div id="response">La réponse de Dan IA s'affichera ici...</div>
 </div>
 
 <script>
-    function toggleMenu() {
-        document.getElementById("menu").classList.toggle("show");
-    }
+    let conversationHistory = [
+        { role: "system", content: "Tu es Dan IA, expert en littérature. Réponds brièvement et de manière professionnelle." }
+    ];
 
     async function ask() {
         const questionInput = document.getElementById("question");
-        const resElement = document.getElementById("response");
+        const chatContainer = document.getElementById("chat-container");
         const question = questionInput.value.trim();
         
         if (!question) return;
 
-        resElement.textContent = "Dan IA réfléchit...";
+        appendMessage("user", question);
+        questionInput.value = "";
 
-        const partA = "gsk_6eXCMxw6tuEMF9l";
-        const part2 = "9dhgWWGdyb3FYgEMb";
-        const partZ = "hom4ALVfRXf4X0VaByU6";
-        const apiKey = partA + part2 + partZ;
+        const thinkingDiv = appendMessage("ai", "Dan IA réfléchit...");
 
+        conversationHistory.push({ role: "user", content: question });
+
+        const apiKey = "gsk_6eXCMxw6tuEMF9l" + "9dhgWWGdyb3FYgEMb" + "hom4ALVfRXf4X0VaByU6";
         const MODEL_URL = "https://api.groq.com/openai/v1/chat/completions";
 
         try {
@@ -247,35 +253,41 @@
                 },
                 body: JSON.stringify({
                     model: "llama-3.3-70b-versatile", 
-                    messages: [
-                        {
-                            role: "system", 
-                            content: "Tu es Dan IA, expert en littérature. Réponds brièvement."
-                        },
-                        {
-                            role: "user", 
-                            content: question
-                        }
-                    ],
+                    messages: conversationHistory,
                     temperature: 0.7,
-                    max_tokens: 250
+                    max_tokens: 500
                 }),
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                const out = data.choices[0].message.content;
-                resElement.textContent = out.trim();
+                const aiResponse = data.choices[0].message.content.trim();
+                
+                thinkingDiv.textContent = aiResponse;
+                
+                conversationHistory.push({ role: "assistant", content: aiResponse });
             } else {
-                console.error("Erreur API:", data);
-                resElement.textContent = "Erreur : " + (data.error?.message || "Problème API");
+                thinkingDiv.textContent = "Désolé, une erreur est survenue.";
+                console.error(data);
             }
 
         } catch (err) {
-            console.error("Erreur détaillée :", err);
-            resElement.textContent = "Erreur de connexion.";
+            thinkingDiv.textContent = "Erreur de connexion au serveur.";
+            console.error(err);
         }
+
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function appendMessage(role, text) {
+        const container = document.getElementById("chat-container");
+        const msgDiv = document.createElement("div");
+        msgDiv.className = `message ${role}-message`;
+        msgDiv.textContent = text;
+        container.appendChild(msgDiv);
+        container.scrollTop = container.scrollHeight;
+        return msgDiv;
     }
 
     document.getElementById("question").addEventListener("keypress", (e) => {
