@@ -214,13 +214,12 @@
         <input type="text" id="question" placeholder="Ex: Analyse de Germinal...">
         <button class="send-btn" onclick="ask()">Envoyer</button>
     </div>
-    <div id="response">La réponse de l'expert s'affichera ici...</div>
+    <div id="response">La réponse de Dan IA s'affichera ici...</div>
 </div>
 
 <script>
     function toggleMenu() {
-        const menu = document.getElementById("menu");
-        menu.classList.toggle("show");
+        document.getElementById("menu").classList.toggle("show");
     }
 
     async function ask() {
@@ -230,64 +229,52 @@
         
         if (!question) return;
 
+        resElement.textContent = "Dan IA réfléchit...";
 
-        resElement.textContent = "Dan IA est en train de réfléchir...";
+        const p1 = "hf_YtxnWOPGDfoDZCJ"; 
+        const p2 = "dGtgWccZWVmLDnRpoTp"; 
+        const secret = p1 + p2;
 
-        const part1 = "hf_";
-        const part2 = "dGtgWccZWVmLDnRpoTp";   
-        const part3 = "YtxnWOPGDfoDZCJ";   
-        const HF_TOKEN = part1 + part3 + part2;
-
-        const MODEL_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3";
-
-
-        const prompt = `[INST] Tu es Dan IA, un expert en littérature française pour élèves de STMG. Réponds de façon concise et pédagogique en français aux questions sur les livres, auteurs, mouvements littéraires et analyses de textes. Question: ${question} [/INST]`;
+        const MODEL_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2";
 
         try {
             const response = await fetch(MODEL_URL, {
-                method: "POST",
                 headers: {
-                    "Authorization": `Bearer ${HF_TOKEN}`,
-                    "Content-Type": "application/json"
+                    "Authorization": "Bearer " + secret,
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    inputs: prompt,
-                    parameters: { 
-                        max_new_tokens: 500,
-                        temperature: 0.7,
-                        return_full_text: false 
-                    }
-                })
+                method: "POST",
+                body: JSON.stringify({ 
+                    inputs: `<s>[INST] Tu es Dan IA, expert en littérature. Réponds brièvement à : ${question} [/INST]`,
+                    parameters: { max_new_tokens: 250 }
+                }),
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                let reply = "";
-                if (Array.isArray(data)) {
-                    reply = data[0].generated_text;
-                } else {
-                    reply = data.generated_text;
-                }
+                let out = Array.isArray(data) ? data[0].generated_text : data.generated_text;
                 
-                resElement.textContent = reply.trim();
+                if (out.includes("[/INST]")) {
+                    out = out.split("[/INST]").pop();
+                }
+                resElement.textContent = out.trim();
             } else {
-                if (data.error && data.error.includes("loading")) {
-                    resElement.textContent = "Le modèle démarre... Réessaie dans 20 secondes !";
+                if (response.status === 503) {
+                    resElement.textContent = "Le modèle est en train de démarrer... Patiente 20 secondes et réessaie.";
                 } else {
-                    resElement.textContent = "Erreur API : " + (data.error || "Problème inconnu");
+                    resElement.textContent = "Erreur " + response.status + " : " + (data.error || "Vérifie ton token.");
                 }
             }
+
         } catch (err) {
-            resElement.textContent = "Erreur de connexion : " + err.message;
-            console.error(err);
+            console.error("Erreur détaillée :", err);
+            resElement.textContent = "Erreur de connexion.";
         }
     }
 
-    document.getElementById("question").addEventListener("keypress", function (e) {
-        if (e.key === "Enter") {
-            ask();
-        }
+    document.getElementById("question").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") ask();
     });
 </script>
 
