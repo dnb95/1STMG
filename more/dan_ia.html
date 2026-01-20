@@ -232,9 +232,9 @@
         resElement.textContent = "Dan IA réfléchit...";
 
         const partA = "gsk_6eXCMxw6tuEMF9l";
-        const partB = "9dhgWWGdyb3FYgEMb";
-        const partC = "hom4ALVfRXf4X0VaByU6";
-        const apiKey = partA + partB + partC;
+        const part2 = "9dhgWWGdyb3FYgEMb";
+        const partZ = "hom4ALVfRXf4X0VaByU6";
+        const apiKey = partA + part2 + partZ;
 
         const MODEL_URL = "https://api.groq.com/openai/v1/chat/completions";
 
@@ -246,7 +246,7 @@
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    model: "llama3-70b-8192", 
+                    model: "llama-3.3-70b-versatile", 
                     messages: [
                         {
                             role: "system", 
@@ -269,7 +269,7 @@
                 resElement.textContent = out.trim();
             } else {
                 console.error("Erreur API:", data);
-                resElement.textContent = "Erreur : " + (data.error?.message || "Vérifie ta clé API.");
+                resElement.textContent = "Erreur : " + (data.error?.message || "Problème API");
             }
 
         } catch (err) {
