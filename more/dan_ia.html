@@ -1,1 +1,269 @@
-not yet
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Révisions STMG Français, par Dan.</title>
+
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Dan_Reviz.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+
+
+        header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            height: 56px; 
+            background-color: #161b22;
+            border-radius: 14px;
+            border: 1px solid #30363d;
+            display: flex;
+            align-items: center;
+            overflow: visible;
+        }
+
+        .nav::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(
+                circle at top right,
+                rgba(0, 255, 150, 0.25),
+                #161b22 40%
+            );
+            pointer-events: none;
+        }
+
+        .logo {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #0d1117;
+            border-radius: 50%;
+            padding: 4px;
+            border: 1px solid #30363d;
+            z-index: 2;
+        }
+
+        .logo img {
+            width: 34px;
+            height: 34px;
+            display: block;
+        }
+
+        .menu {
+            margin-left: auto;
+            margin-right: 20px;
+            display: flex;
+            gap: 22px;
+            z-index: 1;
+        }
+
+        .menu a {
+            color: #c9d1d9;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .menu a:hover {
+            color: #58a6ff;
+        }
+
+        .hamburger {
+            position: absolute;
+            left: 30px;
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .hamburger span {
+            background: #c9d1d9;
+            height: 3px;
+            width: 26px;
+            margin: 4px 0;
+            border-radius: 2px;
+        }
+
+        .chat-section {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #161b22;
+            border-radius: 18px;
+            border: 1px solid #30363d;
+            text-align: center;
+        }
+
+        .chat-section h2 {
+            margin-bottom: 20px;
+            color: #58a6ff;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            background: #0d1117;
+            color: white;
+            font-size: 16px;
+        }
+
+        button.send-btn {
+            padding: 10px 20px;
+            background-color: #238636;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        button.send-btn:hover {
+            background-color: #2ea043;
+        }
+
+        #response {
+            text-align: left;
+            background: #0d1117;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #30363d;
+            min-height: 80px;
+            white-space: pre-wrap;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .menu {
+                display: none;
+                position: absolute;
+                top: 100px;
+                left: 20px;
+                flex-direction: column;
+                background-color: #161b22;
+                padding: 15px;
+                border-radius: 14px;
+                border: 1px solid #30363d;
+            }
+            .menu.show { display: flex; }
+            .hamburger { display: flex; }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav class="nav">
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <a class="logo" href="https://dnb95.github.io/1STMG/">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Dan_Reviz.png" alt="dan_reviz">
+        </a>
+
+        <div class="menu" id="menu">
+            <a href="more/dan_ia.html">Dan IA</a>
+            <a href="more/contact.html">Contact</a>
+            <a href="more/a_propos.html">À propos</a>
+        </div>
+    </nav>
+</header>
+
+<div class="chat-section">
+    <h2>Pose ta question à Dan IA</h2>
+    <div class="input-container">
+        <input type="text" id="question" placeholder="Ex: Analyse de Germinal...">
+        <button class="send-btn" onclick="ask()">Envoyer</button>
+    </div>
+    <div id="response">La réponse de l'expert s'affichera ici...</div>
+</div>
+
+<script>
+    function toggleMenu() {
+        document.getElementById("menu").classList.toggle("show");
+    }
+
+    async function ask() {
+        const question = document.getElementById("question").value;
+        const resElement = document.getElementById("response");
+        
+        if(!question) return;
+
+        resElement.textContent = "Analyse en cours...";
+
+        const HF_TOKEN = "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"; 
+        
+        const MODEL_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3";
+
+        try {
+            const response = await fetch(MODEL_URL, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${HF_TOKEN}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    inputs: `Tu es Dan IA, expert en littérature. Réponds à : ${question}`,
+                    parameters: { max_new_tokens: 200 }
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                resElement.textContent = "Erreur API " + response.status + " : " + (data.error || "Problème d'autorisation");
+            } else {
+
+                let answer = data[0].generated_text;
+                resElement.textContent = answer.split("Réponds à :")[1] || answer;
+            }
+
+        } catch (err) {
+            resElement.textContent = "Erreur technique : " + err.message + 
+            ". Vérifie que tu n'as pas d'extension type 'AdBlock' qui bloque la requête.";
+            console.error(err);
+        }
+    }
+</script>
+
+</body>
+</html>
