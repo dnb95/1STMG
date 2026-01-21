@@ -1,1 +1,301 @@
-not yet
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>À propos</title>
+
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/7/75/Dan_Bouillet.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            overflow-x: hidden;
+        }
+
+        header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            height: 56px; 
+            background-color: #161b22;
+            border-radius: 14px;
+            border: 1px solid #30363d;
+            display: flex;
+            align-items: center;
+            overflow: visible;
+        }
+
+        .nav::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(
+                circle at top right,
+                rgba(0, 255, 150, 0.25),
+                #161b22 40%
+            );
+            pointer-events: none;
+        }
+
+        .logo {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #0d1117;
+            border-radius: 50%;
+            padding: 4px;
+            border: 1px solid #30363d;
+            z-index: 2;
+        }
+
+        .logo img {
+            width: 34px;
+            height: 34px;
+            display: block;
+        }
+
+        .menu {
+            margin-left: auto;
+            margin-right: 20px;
+            display: flex;
+            gap: 22px;
+            z-index: 1;
+        }
+
+        .menu a {
+            color: #c9d1d9;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .menu a:hover {
+            color: #58a6ff;
+        }
+
+        .hamburger {
+            position: absolute;
+            left: 30px;
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .hamburger span {
+            background: #c9d1d9;
+            height: 3px;
+            width: 26px;
+            margin: 4px 0;
+            border-radius: 2px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+
+        .box {
+            position: relative;
+            border: 1px solid #30363d;
+            border-radius: 18px;
+            overflow: hidden;
+            background-color: #0d1117;
+            transition: transform 0.2s ease;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box:hover {
+            transform: translateY(-4px);
+        }
+
+        .box::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                circle at top right,
+                rgba(255, 0, 0, 0.35),
+                transparent 60%
+            );
+            pointer-events: none;
+        }
+
+
+        #cinema-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 2.5s ease; 
+        }
+
+        #cinema-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .credits-wrapper {
+            position: absolute;
+            top: 100%;
+            text-align: center;
+            width: 100%;
+        }
+
+        .scrolling-animation {
+            animation: movieScroll 15s linear forwards;
+        }
+
+        @keyframes movieScroll {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-250%); }
+        }
+
+        .credit-item {
+            font-size: 2.2rem;
+            margin: 50px 0;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        #btn-close-cinema {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            padding: 10px 20px;
+            background: #161b22;
+            color: #58a6ff;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            display: none; 
+            z-index: 10000;
+        }
+
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .menu {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 20px;
+                flex-direction: column;
+                background-color: #161b22;
+                padding: 15px;
+                border-radius: 14px;
+                border: 1px solid #30363d;
+            }
+            .menu.show { display: flex; }
+            .hamburger { display: flex; }
+            .grid { grid-template-columns: 1fr; }
+            .credit-item { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+<button id="btn-close-cinema" onclick="stopCinema()">Fermer</button>
+<div id="cinema-overlay">
+    <div class="credits-wrapper" id="credits-box">
+        <div class="credit-item">Remerciement à </div>
+        <div class="credit-item">Dan</div>
+        <div class="credit-item">ET</div>
+        <div class="credit-item">Jayden</div>
+        <div class="credit-item">Et</div>
+        <div class="credit-item">Dan</div>
+        <div class="credit-item">Dan</div>
+        <div class="credit-item">Dan</div>
+        <div class="credit-item">Dan</div>
+        <div class="credit-item">Dan</div>
+        <div class="credit-item">Dan</div>
+    </div>
+</div>
+
+<header>
+    <nav class="nav">
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <a class="logo" href="https://dnb95.github.io/1STMG/">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Dan_Bouillet.png" alt="dan_reviz">
+        </a>
+
+        <div class="menu" id="menu">
+            <a href="https://dnb95.github.io/1STMG/more/dan_ia.html">Dan IA</a>
+            <a href="https://dnb95.github.io/1STMG/more/contact.html">Contact</a>
+            <a href="https://dnb95.github.io/1STMG/more/a_propos.html">À propos</a>
+        </div>
+    </nav>
+</header>
+<a class="box"><p>2 secondes...</p></a>
+<script>
+    function toggleMenu() {
+        document.getElementById("menu").classList.toggle("show");
+    }
+
+    window.onload = function() {
+        const overlay = document.getElementById('cinema-overlay');
+        const credits = document.getElementById('credits-box');
+        const btnClose = document.getElementById('btn-close-cinema');
+
+        setTimeout(() => {
+            overlay.classList.add('active');
+            credits.classList.add('scrolling-animation');
+            btnClose.style.display = 'block';
+        }, 1800);
+    };
+
+    function stopCinema() {
+        const overlay = document.getElementById('cinema-overlay');
+        const credits = document.getElementById('credits-box');
+        const btnClose = document.getElementById('btn-close-cinema');
+
+        overlay.classList.remove('active');
+        credits.classList.remove('scrolling-animation');
+        btnClose.style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
