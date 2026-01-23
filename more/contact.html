@@ -2,15 +2,15 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Conatct</title>
+    <title>Contact</title>
 
     <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/7/75/Dan_Bouillet.png">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
-      <style>
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -19,48 +19,32 @@
         }
 
         body {
-            background: linear-gradient(-45deg, #0d1117, #161b22, #0f1c2e, #1a101a);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: #05080b;
             color: #c9d1d9;
             min-height: 100vh;
+            overflow-x: hidden; 
+            display: flex;
+            flex-direction: column;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
         header {
             padding: 20px 0;
             display: flex;
             justify-content: center;
+            z-index: 100;
         }
 
         .nav {
             position: relative;
-            width: 100%;
+            width: 90%;
             max-width: 1100px;
             height: 56px; 
-            background-color: #161b22;
+            background-color: rgba(22, 27, 34, 0.8);
+            backdrop-filter: blur(10px);
             border-radius: 14px;
             border: 1px solid #30363d;
             display: flex;
             align-items: center;
-            overflow: visible;
-        }
-
-        .nav::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            background: radial-gradient(
-                circle at top right,
-                rgba(0, 255, 150, 0.25),
-                #161b22 40%
-            );
-            pointer-events: none;
         }
 
         .logo {
@@ -72,7 +56,6 @@
             border-radius: 50%;
             padding: 4px;
             border: 1px solid #30363d;
-            z-index: 2;
         }
 
         .logo img {
@@ -86,211 +69,238 @@
             margin-right: 20px;
             display: flex;
             gap: 22px;
-            z-index: 1;
         }
 
         .menu a {
             color: #c9d1d9;
             text-decoration: none;
             font-size: 14px;
+            font-weight: 600;
+            transition: color 0.3s;
         }
 
         .menu a:hover {
             color: #58a6ff;
         }
 
-        .hamburger {
-            position: absolute;
-            left: 30px;
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            z-index: 2;
-        }
-
-        .hamburger span {
-            background: #c9d1d9;
-            height: 3px;
-            width: 26px;
-            margin: 4px 0;
-            border-radius: 2px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 80px auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .grid {
+        .star-container {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 500px;
-            display: grid;
-            grid-template-columns: 1fr;
+            height: 100%;
+            z-index: 0;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
         }
 
-        .box {
-            position: relative;
-            border: 1px solid #30363d;
-            border-radius: 18px;
-            overflow: hidden;
-            background-color: #0d1117;
-        }
-        .box::before {
-            content: "";
+        .stars {
             position: absolute;
-            inset: 0;
-            background: radial-gradient(
-                circle at top right,
-                rgba(255, 0, 0, 0.35),
-                transparent 60%
-            );
-            pointer-events: none;
+            width: 1px;
+            height: 1px;
+            background: transparent;
+            box-shadow: 454px 582px #FFF, 1553px 101px #FFF, 1024px 345px #FFF, 234px 980px #FFF, 1800px 500px #FFF, 400px 200px #FFF, 1200px 800px #FFF, 100px 100px #FFF;
+            animation: twinkle 3s ease-in-out infinite;
         }
-        .contact-box {
-            padding: 30px;
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .contact-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+            z-index: 10;
+            padding: 40px 20px;
+        }
+
+        .contact-card {
+            background: rgba(22, 27, 34, 0.6);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 0 50px rgba(88, 166, 255, 0.1);
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(to bottom, #fff, #58a6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
-        .contact-box h2 {
-            text-align: center;
-        }
-
-        .contact-box input,
-        .contact-box textarea {
-            background: #161b22;
+        input, textarea {
+            background: rgba(13, 17, 23, 0.7);
             border: 1px solid #30363d;
-            border-radius: 10px;
-            padding: 10px;
-            color: #c9d1d9;
-        }
-
-        .contact-box textarea {
-            min-height: 110px;
-        }
-
-        .contact-box button {
-            margin-top: 15px;
-            padding: 12px;
             border-radius: 12px;
+            padding: 14px;
+            color: #c9d1d9;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #58a6ff;
+            box-shadow: 0 0 10px rgba(88, 166, 255, 0.2);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .send-btn {
+            display: inline-block;
+            background: #58a6ff;
+            color: #0d1117;
+            padding: 15px 35px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
             border: none;
-            background: black;
-            color: white;
-            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(88, 166, 255, 0.4);
+            width: 100%;
         }
 
-        .contact-box button:hover {
-            animation: glow 2s linear infinite;
+        .send-btn:hover {
+            transform: scale(1.02);
+            background: #79c0ff;
+            box-shadow: 0 0 25px rgba(88, 166, 255, 0.6);
         }
 
-        @keyframes glow {
-            0% { box-shadow: 0 0 10px red, 0 0 20px orange; }
-            25% { box-shadow: 0 0 10px yellow, 0 0 20px green; }
-            50% { box-shadow: 0 0 10px cyan, 0 0 20px blue; }
-            75% { box-shadow: 0 0 10px violet, 0 0 20px red; }
-            100% { box-shadow: 0 0 10px red, 0 0 20px orange; }
+        .glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: #58a6ff;
+            filter: blur(150px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: -1;
+            border-radius: 50%;
         }
 
         @media (max-width: 600px) {
-            .menu {
-                display: none;
-                position: absolute;
-                top: 100px;
-                left: 20px;
-                flex-direction: column;
-                background-color: #161b22;
-                padding: 15px;
-                border-radius: 14px;
-                border: 1px solid #30363d;
-            }
-
-            .menu.show {
-                display: flex;
-            }
-
-            .hamburger {
-                display: flex;
-            }
+            h1 { font-size: 2rem; }
+            .contact-card { padding: 30px 20px; }
+            .menu { display: none; } 
         }
     </style>
 </head>
-
 <body>
 
-<header>
-    <nav class="nav">
+    <header>
+        <nav class="nav">
+            <a class="logo" href="https://dnb95.github.io/1STMG/">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Dan_Bouillet.png" alt="dan_reviz">
+            </a>
+            <div class="menu">
+                <a href="https://dnb95.github.io/1STMG/more/dan_ia.html">Dan IA</a>
+                <a href="https://dnb95.github.io/1STMG/more/contact.html">Contact</a>
+                <a href="https://dnb95.github.io/1STMG/more/a_propos.html">À propos</a>
+            </div>
+        </nav>
+    </header>
 
-        <div class="hamburger" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+    <div class="star-container">
+        <div class="stars"></div>
+    </div>
 
-        <a class="logo" href="https://dnb95.github.io/1STMG/">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Dan_Bouillet.png">
-        </a>
+    <div class="glow" id="glow"></div>
 
-        <div class="menu" id="menu">
-            <a href="https://dnb95.github.io/1STMG/more/dan_ia.html">Dan IA</a>
-            <a href="https://dnb95.github.io/1STMG/more/contact.html">Contact</a>
-            <a href="https://dnb95.github.io/1STMG/more/a_propos.html">À propos</a>
-        </div>
+    <div class="contact-wrapper">
+        <div class="contact-card" id="card">
+            <h1>Me contacter</h1>
+            
+            <div class="form-group">
+                <input type="email" id="email" placeholder="Ton email *">
+                <input type="text" id="reason" placeholder="Raison (optionnel)">
+                <textarea id="message" placeholder="Ton message (optionnel)"></textarea>
+            </div>
 
-    </nav>
-</header>
-
-<div class="container">
-    <div class="grid">
-        <div class="box contact-box">
-            <h2>Me contacter</h2>
-
-            <input type="email" id="email" placeholder="Ton email *">
-            <input type="text" id="reason" placeholder="Raison (optionnel)">
-            <textarea id="message" placeholder="Ton message (optionnel)"></textarea>
-
-            <button onclick="sendMail()">Envoyer</button>
+            <button class="send-btn" onclick="sendMail()">Envoyer le message</button>
         </div>
     </div>
-</div>
 
-<script>
-function toggleMenu() {
-    document.getElementById("menu").classList.toggle("show");
-}
+    <script>
+        const card = document.getElementById('card');
+        const glow = document.getElementById('glow');
 
-(function(){
-   emailjs.init("2VkygefcXxbSOlhFX");
-})();
+        document.addEventListener('mousemove', (e) => {
+            let xAxis = (window.innerWidth / 2 - e.pageX) / 30;
+            let yAxis = (window.innerHeight / 2 - e.pageY) / 30;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
 
-function sendMail() {
-    const email = document.getElementById("email").value;
-    const reason = document.getElementById("reason").value;
-    const message = document.getElementById("message").value;
+            glow.style.left = `${e.pageX - 150}px`;
+            glow.style.top = `${e.pageY - 150}px`;
+        });
 
-    if (!email) {
-        alert("Merci de renseigner ton email !");
-        return;
-    }
+        (function(){
+           emailjs.init("2VkygefcXxbSOlhFX");
+        })();
 
-    emailjs.send("service_dx0p4oy", "template_koa8ptr", {
-        email: email,
-        reason: reason || "Aucune raison",
-        message: message || "Aucun message"
-    })
-    .then(() => {
-        alert("Message envoyé avec succès 🚀");
-    })
-    .catch((error) => {
-        alert("Erreur lors de l'envoi");
-        console.error(error);
-    });
-}
-</script>
+        function sendMail() {
+            const email = document.getElementById("email").value;
+            const reason = document.getElementById("reason").value;
+            const message = document.getElementById("message").value;
+
+            if (!email) {
+                alert("Merci de renseigner ton email !");
+                return;
+            }
+
+            const btn = document.querySelector('.send-btn');
+            const originalText = btn.innerText;
+            btn.innerText = "Envoi en cours...";
+            btn.style.opacity = "0.7";
+
+            emailjs.send("service_dx0p4oy", "template_koa8ptr", {
+                email: email,
+                reason: reason || "Aucune raison",
+                message: message || "Aucun message"
+            })
+            .then(() => {
+                alert("Message envoyé avec succès 🚀");
+                btn.innerText = originalText;
+                btn.style.opacity = "1";
+                document.getElementById("email").value = "";
+                document.getElementById("reason").value = "";
+                document.getElementById("message").value = "";
+            })
+            .catch((error) => {
+                alert("Erreur lors de l'envoi");
+                console.error(error);
+                btn.innerText = originalText;
+                btn.style.opacity = "1";
+            });
+        }
+    </script>
 
 </body>
 </html>
