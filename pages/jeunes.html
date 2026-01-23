@@ -1,1 +1,529 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mémoires de deux jeunes mariées - Balzac</title>
+
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/7/75/Dan_Bouillet.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #0d1117, #161b22, #0f1c2e, #1a101a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #c9d1d9;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            height: 56px; 
+            background-color: #161b22;
+            border-radius: 14px;
+            border: 1px solid #30363d;
+            display: flex;
+            align-items: center;
+            overflow: visible;
+        }
+
+        .nav::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(
+                circle at top right,
+                rgba(0, 255, 150, 0.15),
+                transparent 40%
+            );
+            pointer-events: none;
+        }
+
+        .logo {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #0d1117;
+            border-radius: 50%;
+            padding: 4px;
+            border: 1px solid #30363d;
+            z-index: 2;
+        }
+
+        .logo img {
+            width: 34px;
+            height: 34px;
+            display: block;
+        }
+
+        .menu {
+            margin-left: auto;
+            margin-right: 20px;
+            display: flex;
+            gap: 22px;
+            z-index: 1;
+        }
+
+        .menu a {
+            color: #c9d1d9;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .menu a:hover {
+            color: #58a6ff;
+        }
+
+        .hamburger {
+            position: absolute;
+            left: 30px;
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .hamburger span {
+            background: #c9d1d9;
+            height: 3px;
+            width: 26px;
+            margin: 4px 0;
+            border-radius: 2px;
+        }
+
+        .main-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #c9d1d9;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(88, 166, 255, 0.2);
+            line-height: 1.3;
+        }
+        
+        .author {
+            text-align: center;
+            color: #58a6ff;
+            font-size: 1.2rem;
+            margin-top: -10px;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .text-box {
+            position: relative;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 18px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .text-box::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 18px;
+            background: radial-gradient(
+                circle at top left,
+                rgba(88, 166, 255, 0.08),
+                transparent 60%
+            );
+            pointer-events: none;
+        }
+
+        .page-content {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.8;
+            font-size: 16px;
+            white-space: pre-wrap; 
+            color: #c9d1d9;
+        }
+
+        .page-separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 50px 0 30px 0;
+            color: #58a6ff;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .page-separator::before, .page-separator::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #30363d;
+        }
+        .page-separator:not(:empty)::before { margin-right: 1em; }
+        .page-separator:not(:empty)::after { margin-left: 1em; }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .download-btn {
+            background-color: #238636;
+            color: #ffffff;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid rgba(240, 246, 252, 0.1);
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .download-btn:hover {
+            background-color: #2ea043;
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(46, 160, 67, 0.4);
+        }
+
+        .ai-section {
+            margin-top: 60px;
+        }
+        
+        .chat-interface {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 18px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+
+        .chat-header {
+            background-color: #21262d;
+            padding: 15px 20px;
+            border-bottom: 1px solid #30363d;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+        }
+
+        .chat-header .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #00ff96;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #00ff96;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            scroll-behavior: smooth;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 15px;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background-color: #1f6feb;
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+
+        .message.bot {
+            align-self: flex-start;
+            background-color: #30363d;
+            color: #c9d1d9;
+            border-bottom-left-radius: 2px;
+            border: 1px solid #484f58;
+        }
+
+        .chat-input-area {
+            padding: 20px;
+            background-color: #0d1117;
+            border-top: 1px solid #30363d;
+            display: flex;
+            gap: 12px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 12px 15px;
+            color: #c9d1d9;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #58a6ff;
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+        }
+
+        button.send-btn {
+            background-color: #58a6ff;
+            color: #0d1117;
+            border: none;
+            padding: 0 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button.send-btn:hover {
+            background-color: #79c0ff;
+        }
+
+        @media (max-width: 600px) {
+            .menu {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 20px;
+                right: 20px;
+                flex-direction: column;
+                background-color: #161b22;
+                padding: 15px;
+                border-radius: 14px;
+                border: 1px solid #30363d;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            }
+
+            .menu.show {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+            
+            .text-box {
+                padding: 20px;
+            }
+            
+            h1 { font-size: 1.8rem; }
+            .message { max-width: 95%; }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav class="nav">
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <a class="logo" href="https://dnb95.github.io/1STMG/">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Dan_Bouillet.png" alt="dan_reviz">
+        </a>
+
+        <div class="menu" id="menu">
+            <a href="https://dnb95.github.io/1STMG/more/dan_ia.html">Dan IA</a>
+            <a href="https://dnb95.github.io/1STMG/more/contact.html">Contact</a>
+            <a href="https://dnb95.github.io/1STMG/more/a_propos.html">À propos</a>
+        </div>
+    </nav>
+</header>
+
+<div class="main-container">
+    
+    <div>
+        <h1>Mémoires de deux jeunes mariées</h1>
+        <p class="author">Honoré de Balzac</p>
+    </div>
+
+    <div class="text-box">
+        <div class="page-separator">Texte 1 : Extrait de la lettre 7 (Un mariage d'amour ?)</div>
+        <div class="page-content">
+Depuis quelques jours je commence à m'épouvanter de notre destinée, à comprendre pourquoi tant de femmes ont des visages attristés sous la couche de vermillon qu'y mettent les fausses joies d'une fête. On se marie au hasard, et tu te maries ainsi. Des ouragans de pensées ont passé dans mon âme.
+
+Être aimée tous les jours de la même manière et néanmoins diversement, être aimée autant après dix ans de bonheur que le premier jour ! Un pareil amour veut des années : il faut s'être laissé désirer pendant bien du temps, avoir éveillé bien des curiosités et les satisfaire, avoir excité bien des sympathies et y répondre.
+
+Y a-t-il donc des lois pour les créations du cœur, comme pour les créations visibles de la nature ? L'allégresse se soutient-elle ? Dans quelle proportion l'amour doit-il mélanger ses larmes et ses plaisirs ? Les froides combinaisons de la vie funèbre, égale, permanente du couvent m'ont alors semblé possibles ; tandis que les richesses, les magnificences ; les pleurs, les délices, les fêtes, les joies, les plaisirs de l'amour égal, partagé, permis m'ont semblé l'impossible.
+
+Je ne vois point de place dans cette ville aux douceurs de l'amour, à ses saintes promenades sous des charmilles, au clair de la pleine lune, quand elle fait briller les eaux et qu'on résiste à des prières. Riche, jeune et belle, je n'ai qu'à aimer, l'amour peut devenir ma vie, ma seule occupation ; or, depuis trois mois que je vais, que je viens avec une impatiente curiosité, je n'ai rien rencontré parmi ces regards brillants, avides, éveillés. Aucune voix ne m'a émue, aucun regard ne m'a illuminé ce monde.
+
+La musique seule a rempli mon âme, elle seule a été pour moi ce qu'est notre amitié. Je suis restée quelquefois pendant une heure, la nuit, à ma fenêtre, regardant le jardin, appelant des événements, les demandant à la source inconnue d'où ils sortent. Je suis quelquefois partie en voiture allant me promener, mettant pied à terre dans les Champs-Élysées en imaginant qu'un homme, que celui qui réveillera mon âme engourdie, arrivera, me suivra, me regardera ; mais, ces jours-là, j'ai vu des saltimbanques, des marchands de pain d'épice et des faiseurs de tours, des passants pressés d'aller à leurs affaires, ou des amoureux qui fuyaient tous les regards, et j'étais tentée de les arrêter et de leur dire : Vous qui êtes heureux, dites-moi ce que c'est que l'amour ?
+        </div>
+
+        <div class="page-separator">Texte 2 : Extrait de la lettre 28 (La Maternité)</div>
+        <div class="page-content">
+Dévouement ! me suis-je dit à moi-même, n'es-tu pas plus que l'amour ? n'es-tu pas la volupté la plus profonde, parce que tu es une abstraite volupté, la volupté génératrice ? N'es-tu pas, ô Dévouement ! la faculté supérieure à l'effet ? N'es-tu pas la mystérieuse, l'infatigable divinité cachée sous les sphères innombrables dans un centre inconnu par où passent tour à tour tous les mondes ?
+
+Le Dévouement, seul dans son secret, plein de plaisirs savourés en silence sur lesquels personne ne jette un œil profane et que personne ne soupçonne, le Dévouement, dieu jaloux et accablant, dieu vainqueur et fort, inépuisable parce qu'il tient à la nature même des choses et qu'il est ainsi toujours égal à lui-même, malgré l'épanchement de ses forces, le Dévouement, voilà donc la signature de ma vie.
+
+L'amour, Louise, est un effort de Felipe sur toi ; mais le rayonnement de ma vie sur la famille produira une incessante réaction de ce petit monde sur moi ! Ta belle moisson dorée est passagère ; mais la mienne, pour être retardée, n'en sera-t-elle pas plus durable ? elle se renouvellera de moments en moments. L'amour est le plus joli larcin que la Société ait su faire à la Nature ; mais la maternité, n'est-ce pas la Nature dans sa joie ? Un sourire a séché mes larmes. L'amour rend mon Louis heureux ; mais le mariage m'a rendue mère et je vais être heureuse aussi !
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <a href="https://drive.google.com/uc?export=download&id=1DiEkzBbJaWZoN9ghOPLzPteiYThk0BHH" class="download-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Télécharger le PDF complet
+        </a>
+    </div>
+
+    <div class="ai-section">
+        <h1>Dan IA</h1>
+        <p class="author">Expert sur Balzac</p>
+        
+        <div class="chat-interface">
+            <div class="chat-header">
+                <span class="dot"></span>
+                Assistant Balzac
+            </div>
+            <div class="chat-messages" id="chat-box">
+                <div class="message bot">
+                    Bonjour ! Je suis spécialiste des "Mémoires de deux jeunes mariées". Pose-moi une question sur Renée, Louise, ou sur les thèmes de l'amour et de la maternité !
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="user-input" placeholder="Posez votre question ici..." onkeypress="handleEnter(event)">
+                <button class="send-btn" onclick="sendMessage()">Envoyer</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleMenu() {
+        document.getElementById("menu").classList.toggle("show");
+    }
+
+
+    const apiKey = "gsk_6eXCMxw6tuEMF9l" + "9dhgWWGdyb3FYgEMb" + "hom4ALVfRXf4X0VaByU6"; 
+    
+    const MODEL_URL = "https://api.groq.com/openai/v1/chat/completions";
+
+    function handleEnter(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    }
+
+    async function sendMessage() {
+        const inputField = document.getElementById("user-input");
+        const chatBox = document.getElementById("chat-box");
+        const userText = inputField.value.trim();
+
+        if (!userText) return;
+
+        chatBox.innerHTML += `<div class="message user">${userText}</div>`;
+        inputField.value = "";
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        const loadingId = "loading-" + Date.now();
+        chatBox.innerHTML += `<div class="message bot" id="${loadingId}">L'IA écrit...</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        try {
+            const response = await fetch(MODEL_URL, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${apiKey}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    model: "llama-3.3-70b-versatile",
+                    messages: [
+                        {
+                            role: "system", 
+                            content: "Tu es un expert littéraire spécialiste du roman épistolaire 'Mémoires de deux jeunes mariées' d'Honoré de Balzac. Tu analyses les lettres échangées entre Louise de Chaulieu (passionnée, Paris) et Renée de Maucombe (sage, maternité, Provence). Tu réponds de manière précise, pédagogique et cultivée en te basant sur les textes fournis (lettre 7 sur le mariage d'amour, lettre 28 sur la maternité et le dévouement)."
+                        },
+                        {
+                            role: "user", 
+                            content: userText
+                        }
+                    ],
+                    temperature: 0.7
+                })
+            });
+
+            const data = await response.json();
+            
+            document.getElementById(loadingId).remove();
+
+            if (!response.ok) {
+                const errorMsg = data.error ? data.error.message : "Erreur inconnue";
+                chatBox.innerHTML += `<div class="message bot" style="color:#ff6b6b; border-color:#ff6b6b">Erreur API : ${errorMsg}</div>`;
+            } else if (data.choices && data.choices.length > 0) {
+                const aiText = data.choices[0].message.content;
+                chatBox.innerHTML += `<div class="message bot">${formatText(aiText)}</div>`;
+            }
+
+        } catch (error) {
+            document.getElementById(loadingId).remove();
+            chatBox.innerHTML += `<div class="message bot" style="color:#ff6b6b">Erreur de connexion : ${error.message}</div>`;
+        }
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function formatText(text) {
+        return text
+            .replace(/\n/g, '<br>')
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    }
+</script>
+
+</body>
+</html>
 
