@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Page Non Disponible - Dan Reviz</title>
+
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/7/75/Dan_Bouillet.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: #05080b;
+            color: #c9d1d9;
+            min-height: 100vh;
+            overflow: hidden; 
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .nav {
+            position: relative;
+            width: 90%;
+            max-width: 1100px;
+            height: 56px; 
+            background-color: rgba(22, 27, 34, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 14px;
+            border: 1px solid #30363d;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #0d1117;
+            border-radius: 50%;
+            padding: 4px;
+            border: 1px solid #30363d;
+        }
+
+        .logo img {
+            width: 34px;
+            height: 34px;
+            display: block;
+        }
+
+        .menu {
+            margin-left: auto;
+            margin-right: 20px;
+            display: flex;
+            gap: 22px;
+        }
+
+        .menu a {
+            color: #c9d1d9;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .star-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+        }
+
+        .stars, .stars2, .stars3 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: transparent;
+        }
+
+        .stars {
+            width: 1px;
+            height: 1px;
+            box-shadow: 454px 582px #FFF, 1553px 101px #FFF, 1024px 345px #FFF, 234px 980px #FFF, 1800px 500px #FFF, 400px 200px #FFF, 1200px 800px #FFF, 100px 100px #FFF, 1500px 300px #FFF, 600px 900px #FFF;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        .stars2 {
+            width: 2px;
+            height: 2px;
+            box-shadow: 120px 450px #FFF, 890px 123px #FFF, 1450px 780px #FFF, 300px 20px #FFF, 1700px 950px #FFF;
+            animation: twinkle 5s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .error-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+            z-index: 10;
+        }
+
+        .error-card {
+            background: rgba(22, 27, 34, 0.6);
+            backdrop-filter: blur(15px);
+            padding: 60px 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 0 50px rgba(88, 166, 255, 0.1);
+            
+            animation: 
+                float 6s ease-in-out infinite,
+                alive 10s linear infinite;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        @keyframes alive {
+            0% { transform: rotateX(0deg) rotateY(0deg) translateY(0); }
+            25% { transform: rotateX(5deg) rotateY(10deg) translateY(-15px); }
+            50% { transform: rotateX(0deg) rotateY(0deg) translateY(-30px); }
+            75% { transform: rotateX(-5deg) rotateY(-10deg) translateY(-15px); }
+            100% { transform: rotateX(0deg) rotateY(0deg) translateY(0); }
+        }
+
+        h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            background: linear-gradient(to bottom, #fff, #58a6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: #c9d1d9;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #8b949e;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: #58a6ff;
+            color: #0d1117;
+            padding: 15px 35px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(88, 166, 255, 0.4);
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            background: #79c0ff;
+            box-shadow: 0 0 25px rgba(88, 166, 255, 0.6);
+        }
+
+        .glow {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: #58a6ff;
+            filter: blur(120px);
+            opacity: 0.2;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 3.5rem; }
+            h2 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav">
+            <a class="logo" href="https://dnb95.github.io/1STMG/">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Dan_Bouillet.png" alt="dan_reviz">
+            </a>
+            <div class="menu">
+                <a href="https://dnb95.github.io/1STMG/">Accueil</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="star-container">
+        <div class="stars"></div>
+        <div class="stars2"></div>
+        <div class="stars3"></div>
+    </div>
+
+    <div class="error-wrapper">
+        <div class="glow"></div>
+        <div class="error-card">
+            <h1>404</h1>
+            <h2>Page Non Disponible</h2>
+            <p>
+                Il semble que cette ressource soit encore en cours de révision ou qu'elle ait voyagé dans une autre dimension littéraire. 
+                Reviens plus tard !
+            </p>
+            <a href="https://dnb95.github.io/1STMG/" class="back-btn">Retour à l'accueil</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            const card = document.querySelector('.error-card');
+            const glow = document.querySelector('.glow');
+            
+            let xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            let yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            glow.style.left = `${e.pageX - 100}px`;
+            glow.style.top = `${e.pageY - 100}px`;
+        });
+    </script>
+
+</body>
+</html>
