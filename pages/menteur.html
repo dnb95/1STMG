@@ -1,1 +1,651 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Le Menteur - Pierre Corneille</title>
 
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/7/75/Dan_Bouillet.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #0d1117, #161b22, #0f1c2e, #1a101a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #c9d1d9;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            height: 56px; 
+            background-color: #161b22;
+            border-radius: 14px;
+            border: 1px solid #30363d;
+            display: flex;
+            align-items: center;
+            overflow: visible;
+        }
+
+        .nav::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(
+                circle at top right,
+                rgba(0, 255, 150, 0.15),
+                transparent 40%
+            );
+            pointer-events: none;
+        }
+
+        .logo {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #0d1117;
+            border-radius: 50%;
+            padding: 4px;
+            border: 1px solid #30363d;
+            z-index: 2;
+        }
+
+        .logo img {
+            width: 34px;
+            height: 34px;
+            display: block;
+        }
+
+        .menu {
+            margin-left: auto;
+            margin-right: 20px;
+            display: flex;
+            gap: 22px;
+            z-index: 1;
+        }
+
+        .menu a {
+            color: #c9d1d9;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .menu a:hover {
+            color: #58a6ff;
+        }
+
+        .hamburger {
+            position: absolute;
+            left: 30px;
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .hamburger span {
+            background: #c9d1d9;
+            height: 3px;
+            width: 26px;
+            margin: 4px 0;
+            border-radius: 2px;
+        }
+
+        .main-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #c9d1d9;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(88, 166, 255, 0.2);
+        }
+        
+        .author {
+            text-align: center;
+            color: #58a6ff;
+            font-size: 1.2rem;
+            margin-top: -10px;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .text-box {
+            position: relative;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 18px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .text-box::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 18px;
+            background: radial-gradient(
+                circle at top left,
+                rgba(88, 166, 255, 0.08),
+                transparent 60%
+            );
+            pointer-events: none;
+        }
+
+        .page-content {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.8;
+            font-size: 16px;
+            white-space: pre-wrap; 
+            color: #c9d1d9;
+        }
+
+        .page-separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 40px 0;
+            color: #58a6ff;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .page-separator::before, .page-separator::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #30363d;
+        }
+        .page-separator:not(:empty)::before { margin-right: 1em; }
+        .page-separator:not(:empty)::after { margin-left: 1em; }
+
+        .highlight-name {
+            color: #58a6ff;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .download-btn {
+            background-color: #238636;
+            color: #ffffff;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid rgba(240, 246, 252, 0.1);
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .download-btn:hover {
+            background-color: #2ea043;
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(46, 160, 67, 0.4);
+        }
+
+        .ai-section {
+            margin-top: 60px;
+        }
+        
+        .chat-interface {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 18px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+
+        .chat-header {
+            background-color: #21262d;
+            padding: 15px 20px;
+            border-bottom: 1px solid #30363d;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+        }
+
+        .chat-header .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #00ff96;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #00ff96;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            scroll-behavior: smooth;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 15px;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background-color: #1f6feb;
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+
+        .message.bot {
+            align-self: flex-start;
+            background-color: #30363d;
+            color: #c9d1d9;
+            border-bottom-left-radius: 2px;
+            border: 1px solid #484f58;
+        }
+
+        .chat-input-area {
+            padding: 20px;
+            background-color: #0d1117;
+            border-top: 1px solid #30363d;
+            display: flex;
+            gap: 12px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 12px 15px;
+            color: #c9d1d9;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #58a6ff;
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+        }
+
+        button.send-btn {
+            background-color: #58a6ff;
+            color: #0d1117;
+            border: none;
+            padding: 0 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button.send-btn:hover {
+            background-color: #79c0ff;
+        }
+
+        @media (max-width: 600px) {
+            .menu {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 20px;
+                right: 20px;
+                flex-direction: column;
+                background-color: #161b22;
+                padding: 15px;
+                border-radius: 14px;
+                border: 1px solid #30363d;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            }
+
+            .menu.show {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+            
+            .text-box {
+                padding: 20px;
+            }
+            
+            h1 { font-size: 1.8rem; }
+            .message { max-width: 95%; }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav class="nav">
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <a class="logo" href="https://dnb95.github.io/1STMG/">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Dan_Bouillet.png" alt="dan_reviz">
+        </a>
+
+        <div class="menu" id="menu">
+            <a href="https://dnb95.github.io/1STMG/more/dan_ia.html">Dan IA</a>
+            <a href="https://dnb95.github.io/1STMG/more/contact.html">Contact</a>
+            <a href="https://dnb95.github.io/1STMG/more/a_propos.html">À propos</a>
+        </div>
+    </nav>
+</header>
+
+<div class="main-container">
+    
+    <div>
+        <h1>Le Menteur</h1>
+        <p class="author">Pierre Corneille</p>
+    </div>
+
+    <div class="text-box">
+        
+        <div class="page-separator">Page 1 : Acte III, Scène 3</div>
+        <div class="page-content">
+<span class="highlight-name">Isabelle, Clarice</span>
+
+<span class="highlight-name">Isabelle :</span>
+Eh bien, cette pratique est-elle si nouvelle ?
+Dorante est-il le seul, qui, de jeune écolier
+Pour être mieux reçu s'érige en Cavalier ?
+Que j'en sais comme lui qui parlent d'Allemagne,
+Et, si l'on veut les croire, ont vu chaque Campagne,
+Sur chaque occasion tranchent des entendus,
+Content quelque défaite, et des chevaux perdus,
+Qui, dans une Gazette apprenant ce langage,
+S'ils sortent de Paris, ne vont qu'à leur village,
+Et se donnent ici pour témoins approuvés
+De tous ces grands combats qu'ils ont lus, ou rêvés !
+Il aura cru sans doute, ou je suis fort trompée,
+Que les filles de cœur aiment les gens d'épée,
+Et vous prenant pour telle, il a jugé soudain
+Qu'une plume au chapeau vous plaît mieux qu'à la main.
+Ainsi donc, pour vous plaire, il a voulu paraître,
+Non pas pour ce qu'il est, mais pour ce qu'il veut être,
+Et s'est osé promettre un traitement plus doux...
+        </div>
+
+        <div class="page-separator">Page 2 : Suite</div>
+        <div class="page-content">
+"Tous adeptes du chacun pour soi
+Personne ne nous respecte et je crois savoir pourquoi
+On est avares et divisés
+On se fait avoir, on ne forme même pas une communauté
+Préoccupés par le besoin
+Serait-on myopes, incapables de voir loin
+On ne veut pas le bien, on veut le gain
+Quitte à détruire l'intérêt commun
+On vit dans l'inconscience des enjeux
+
+Et malgré nous, les médias nous ont mis dans leur jeu
+Manipulés comme des pions, tout le monde mise sur notre division
+On subit la xénophobie
+Incapables de s'organiser en lobby
+On sera toujours des mendiants aux portes de leur monde
+Tant qu'on croira que le respect se quémande
+Le respect s'impose et la lutte est économique
+Observe la communauté asiatique
+Nous on fait beaucoup de bruit et peu de chiffres
+On donne peu de coups, on reçoit beaucoup de gifles
+Impunément les médias nous salissent
+Car, conscients que nous insulter ne comporte aucun risque
+On ne fait peur à personne, on est la risée de tous
+Et nos émeutes se déroulent loin de l'Élysée
+
+À part brûler quelques voitures
+De pauvres gens comme nous et saboter nos propres structures
+Où est notre révolution, où est notre évolution
+On est en France depuis plusieurs générations et où en est-on?
+Même si ça fout un coup au moral
+Force est de constater qu'on est en bas de l'échelle sociale
+Dans le collimateur des médias, y a pas plus visés que nous
+Alors toi, explique-moi pourquoi y a pas plus divisés"
+
+(reprenant le dialogue) "Demandez donc à quelqu'un qui a grandi
+en banlieue et qui s'en est sorti ! Demandez-lui comment est-ce
+qu'il a senti le regard et l'attitude des autres changer à son égard !
+Demandez-lui s'il les a entendus chantonner en choeur: « II y est
+parvenu, nous sommes heureux pour lui et s'il y est parvenu, nous
+pouvons nous aussi y parvenir ! » ou s'il les a plutôt entendus..."
+        </div>
+
+        <div class="page-separator">Page 3 : Acte I, Scène 6</div>
+        <div class="page-content">
+<span class="highlight-name">Dorante, Cliton</span>
+
+<span class="highlight-name">Cliton :</span>
+Monsieur, puis-je à présent parler sans vous déplaire ?
+
+<span class="highlight-name">Dorante :</span>
+Je remets à ton choix de parler ou te taire,
+Mais quand tu vois quelqu'un, ne fais plus l'insolent.
+
+<span class="highlight-name">Cliton :</span>
+Votre ordinaire est-il de rêver en parlant ?
+
+<span class="highlight-name">Dorante :</span>
+Où me vois-tu rêver ?
+
+<span class="highlight-name">Cliton :</span>
+J'appelle rêveries
+Ce qu'en d'autres qu'un maître on nomme menteries
+Je parle avec respect.
+
+<span class="highlight-name">Dorante :</span>
+Pauvre esprit !
+
+<span class="highlight-name">Cliton :</span>
+Je le perds
+Quand je vous ois parler de guerre, et de concerts.
+Vous voyez sans péril nos batailles dernières,
+Et faites des festins qui ne vous coûtent guère.
+Pourquoi depuis un an vous feindre de retour.
+
+<span class="highlight-name">Dorante :</span>
+J'en montre plus de flamme, et j'en fais mieux ma Cour.
+        </div>
+
+        <div class="page-separator">Page 4 : Suite Acte I, Scène 6</div>
+        <div class="page-content">
+<span class="highlight-name">Cliton :</span>
+Qu'a de propre la guerre à montrer votre flamme ?
+
+<span class="highlight-name">Dorante :</span>
+Ô le beau compliment à charmer une Dame
+De lui dire d'abord : « J'apporte à vos beautés
+Un cœur nouveau venu des Universités ;
+Si vous avez besoin de Lois et de Rubriques,
+Je sais le Code entier avec les Authentiques,
+Le Digeste nouveau, le Vieux, l'Infortiat,
+Ce qu'en a dit Jason, Balde, Accurse, Alciat. »
+Qu'un si riche discours nous rend considérables !
+Qu'on amollit par là de cœurs inexorables !
+Qu'un homme à Paragraphe est un joli galant !
+On s'introduit bien mieux à titre de vaillant,
+Tout le secret ne gît qu'en un peu de grimace,
+A mentir à propos, jurer de bonne grâce
+Étaler force mots qu'elles n'entendent pas,
+Faire sonner Lamboy, Jean de Vert, et Galas,
+Nommer quelques châteaux, de qui les noms barbares,
+Plus ils blessent l'oreille, et plus leur semblent rares,
+Avoir toujours en bouche angles, lignes, fossés,
+Vedette, contrescarpe, et travaux avancés.
+Sans ordre et sans raison, n'importe, on les étonne,
+On leur fait admirer les bayes qu'on leur donne,
+Et tel, à la faveur d'un semblable débit
+Passe pour homme illustre, et se met en crédit.
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <a href="https://drive.google.com/uc?export=download&id=1X17Ttn0OzT8YinrlSB5MCaAqHumcDhkP" class="download-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Télécharger le PDF complet
+        </a>
+    </div>
+
+    <div class="ai-section">
+        <h1>Dan IA</h1>
+        <p class="author">Expert sur "Le Menteur"</p>
+        
+        <div class="chat-interface">
+            <div class="chat-header">
+                <span class="dot"></span>
+                Assistant Corneille
+            </div>
+            <div class="chat-messages" id="chat-box">
+                <div class="message bot">
+                    Bonjour ! Je connais tout sur "Le Menteur" de Corneille. Pose-moi une question sur le texte ci-dessus ou sur l'histoire !
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="user-input" placeholder="Posez votre question ici..." onkeypress="handleEnter(event)">
+                <button class="send-btn" onclick="sendMessage()">Envoyer</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleMenu() {
+        document.getElementById("menu").classList.toggle("show");
+    }
+
+ 
+    const apiKey = "gsk_6eXCMxw6tuEMF9l" + "9dhgWWGdyb3FYgEMb" + "hom4ALVfRXf4X0VaByU6";
+    
+    const MODEL_URL = "https://api.groq.com/openai/v1/chat/completions";
+
+    function handleEnter(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    }
+
+    async function sendMessage() {
+        const inputField = document.getElementById("user-input");
+        const chatBox = document.getElementById("chat-box");
+        const userText = inputField.value.trim();
+
+        if (!userText) return;
+
+        chatBox.innerHTML += `<div class="message user">${userText}</div>`;
+        inputField.value = "";
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        const loadingId = "loading-" + Date.now();
+        chatBox.innerHTML += `<div class="message bot" id="${loadingId}">L'IA écrit...</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        try {
+            const response = await fetch(MODEL_URL, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${apiKey}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    model: "llama-3.3-70b-versatile",
+                    messages: [
+                        {
+                            role: "system", 
+                            content: "Tu es un expert littéraire spécialiste de la pièce de théâtre 'Le Menteur' de Pierre Corneille. Tu réponds de manière précise, pédagogique et analytique, en te basant sur le texte fourni dans la page et tes connaissances générales. Analyse les personnages comme Dorante le menteur et Cliton. Ta tonalité est cool mais cultivée."
+                        },
+                        {
+                            role: "user", 
+                            content: userText
+                        }
+                    ],
+                    temperature: 0.7
+                })
+            });
+
+            const data = await response.json();
+            
+
+            document.getElementById(loadingId).remove();
+
+            if (!response.ok) {
+  
+                const errorMsg = data.error ? data.error.message : "Erreur inconnue";
+                chatBox.innerHTML += `<div class="message bot" style="color:#ff6b6b; border-color:#ff6b6b">Erreur API : ${errorMsg}</div>`;
+            } else if (data.choices && data.choices.length > 0) {
+                const aiText = data.choices[0].message.content;
+                chatBox.innerHTML += `<div class="message bot">${formatText(aiText)}</div>`;
+            }
+
+        } catch (error) {
+            document.getElementById(loadingId).remove();
+            chatBox.innerHTML += `<div class="message bot" style="color:#ff6b6b">Erreur de connexion : ${error.message}</div>`;
+        }
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function formatText(text) {
+        return text
+            .replace(/\n/g, '<br>')
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    }
+</script>
+
+</body>
+</html>
