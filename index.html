@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
+      <style>
         * {
             margin: 0;
             padding: 0;
@@ -17,8 +17,17 @@
         }
 
         body {
-            background-color: #0d1117;
+            background: linear-gradient(-45deg, #0d1117, #161b22, #0f1c2e, #1a101a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             color: #c9d1d9;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
 
@@ -139,7 +148,7 @@
             inset: 0;
             background: radial-gradient(
                 circle at top right,
-                rgba(255, 0, 0, 0.35),
+                #58a6ff5b,
                 transparent 60%
             );
             pointer-events: none;
@@ -236,6 +245,7 @@
 
 </body>
 </html>
+
 
 
 
