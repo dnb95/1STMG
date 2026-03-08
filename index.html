@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Dan Reviz - Home</title>
-<meta name="description" content="Dan Reviz est un projet de Dan Bouillet réalisé pour simplifier les révisons du bac.">
+    <meta name="description" content="Dan Reviz est un projet de Dan Bouillet réalisé pour simplifier les révisions du bac.">
     <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/7/75/Dan_Bouillet.png">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      <style>
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -17,50 +17,84 @@
         }
 
         body {
-            background: linear-gradient(-45deg, #0d1117, #161b22, #0f1c2e, #1a101a);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: #05080b;
             color: #c9d1d9;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .star-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
         }
 
+        .stars, .stars2, .stars3 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: transparent;
+        }
+
+        .stars {
+            width: 1px;
+            height: 1px;
+            box-shadow: 454px 582px #FFF, 1553px 101px #FFF, 1024px 345px #FFF, 234px 980px #FFF, 1800px 500px #FFF, 400px 200px #FFF, 1200px 800px #FFF, 100px 100px #FFF, 1500px 300px #FFF, 600px 900px #FFF;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        .stars2 {
+            width: 2px;
+            height: 2px;
+            box-shadow: 120px 450px #FFF, 890px 123px #FFF, 1450px 780px #FFF, 300px 20px #FFF, 1700px 950px #FFF, 800px 600px #FFF, 50px 800px #FFF;
+            animation: twinkle 5s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .glow {
+            position: fixed;
+            width: 250px;
+            height: 250px;
+            background: #58a6ff;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+        }
 
         header {
             padding: 20px 0;
             display: flex;
             justify-content: center;
+            position: relative;
+            z-index: 100;
         }
 
         .nav {
             position: relative;
-            width: 100%;
+            width: 90%;
             max-width: 1100px;
             height: 56px; 
-            background-color: #161b22;
+            background-color: rgba(22, 27, 34, 0.7);
+            backdrop-filter: blur(12px);
             border-radius: 14px;
-            border: 1px solid #30363d;
+            border: 1px solid rgba(48, 54, 61, 0.8);
             display: flex;
             align-items: center;
-            overflow: visible;
-        }
-
-        .nav::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            background: radial-gradient(
-                circle at top right,
-                rgba(0, 255, 150, 0.25),
-                #161b22 40%
-            );
-            pointer-events: none;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
         }
 
         .logo {
@@ -73,6 +107,12 @@
             padding: 4px;
             border: 1px solid #30363d;
             z-index: 2;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 0 15px rgba(88, 166, 255, 0.4);
         }
 
         .logo img {
@@ -93,10 +133,13 @@
             color: #c9d1d9;
             text-decoration: none;
             font-size: 14px;
+            font-weight: 600;
+            transition: color 0.2s;
         }
 
         .menu a:hover {
             color: #58a6ff;
+            text-shadow: 0 0 10px rgba(88, 166, 255, 0.4);
         }
 
         .hamburger {
@@ -114,69 +157,86 @@
             width: 26px;
             margin: 4px 0;
             border-radius: 2px;
+            transition: all 0.3s ease;
         }
 
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(to bottom, #fff, #58a6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 40px 0 20px;
+            position: relative;
+            z-index: 10;
+        }
 
         .container {
             max-width: 1200px;
-            margin: 60px auto;
+            margin: 20px auto 60px;
             padding: 0 20px;
+            position: relative;
+            z-index: 10;
         }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 22px;
+            gap: 25px;
         }
 
         .box {
             position: relative;
-            border: 1px solid #30363d;
+            border: 1px solid rgba(48, 54, 61, 0.6);
             border-radius: 18px;
             overflow: hidden;
-            background-color: #0d1117;
-            transition: transform 0.2s ease;
+            background: rgba(13, 17, 23, 0.6);
+            backdrop-filter: blur(8px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
 
         .box:hover {
-            transform: translateY(-4px);
-        }
-
-        .box::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(
-                circle at top right,
-                #58a6ff5b,
-                transparent 60%
-            );
-            pointer-events: none;
+            transform: translateY(-8px) scale(1.03);
+            border-color: rgba(88, 166, 255, 0.5);
+            box-shadow: 0 15px 30px rgba(88, 166, 255, 0.15), inset 0 0 20px rgba(88, 166, 255, 0.05);
+            z-index: 2;
         }
 
         .box img {
             width: 100%;
             height: auto;
             display: block;
+            transition: transform 0.4s ease;
+        }
+        
+        .box:hover img {
+            transform: scale(1.05);
         }
 
         @media (max-width: 900px) {
             .grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            h1 { font-size: 2.2rem; }
         }
 
         @media (max-width: 600px) {
             .menu {
                 display: none;
                 position: absolute;
-                top: 100px;
-                left: 20px;
+                top: 70px;
+                left: 5%;
+                width: 90%;
                 flex-direction: column;
-                background-color: #161b22;
-                padding: 15px;
+                background-color: rgba(22, 27, 34, 0.95);
+                backdrop-filter: blur(15px);
+                padding: 20px;
                 border-radius: 14px;
                 border: 1px solid #30363d;
+                text-align: center;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             }
 
             .menu.show {
@@ -189,72 +249,72 @@
 
             .grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
             }
-        }
-              h1 {
-                text-align: center;
-                color: #c9d1d9;
-                font-size: 2.2rem;
-                margin-bottom: 10px;
-                text-shadow: 0 0 15px rgba(88, 166, 255, 0.2);
-                line-height: 1.3;
+            
+            h1 { font-size: 1.8rem; margin-top: 20px; }
+            
+            .glow { display: none;  }
         }
     </style>
 </head>
 
 <body>
 
-<header>
-    <nav class="nav">
-
-        <div class="hamburger" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
-        <a class="logo" href="https://dnb95.github.io/1STMG/">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Dan_Bouillet.png" alt="dan_reviz">
-        </a>
-
-        <div class="menu" id="menu">
-            <a href="https://dnb95.github.io/1STMG/more/dan_ia.html">Dan IA</a>
-            <a href="https://dnb95.github.io/1STMG/more/contact.html">Contact</a>
-            <a href="https://dnb95.github.io/1STMG/more/a_propos.html">À propos</a>
-        </div>
-
-    </nav>
-</header>
-<h1>Bienvenue sur Dan Reviz</h1>
-<div class="container">
-    <div class="grid">
-        <a class="box" href="pages/menteur.html"><img src="https://i.ibb.co/hRRcjcB2/m-6.png"></a>
-        <a class="box" href="pages/jeunes.html"><img src="https://i.ibb.co/Y75yjR2M/m-5.png"></a>
-        <a class="box" href="pages/vif.html"><img src="https://i.ibb.co/cSpCRm2b/m-7.png"></a>
-        <a class="box" href="pages/femme.html"><img src="https://i.ibb.co/TBm6rCXg/m-8.png"></a>
-        <a class="box" href="pages/servitude.html"><img src="https://i.ibb.co/JF3vkKY6/m-9.png"></a>
-        <a class="box" href="pages/not_yet.html"><img src="https://i.ibb.co/CpBHvvWn/m-4.png"></a>
-        <a class="box" href="pages/not_yet.html"><img src="https://i.ibb.co/CpBHvvWn/m-4.png"></a>
-        <a class="box" href="pages/not_yet.html"><img src="https://i.ibb.co/CpBHvvWn/m-4.png"></a>
+    <div class="star-container">
+        <div class="stars"></div>
+        <div class="stars2"></div>
+        <div class="stars3"></div>
     </div>
-</div>
 
-<script>
-    function toggleMenu() {
-        document.getElementById("menu").classList.toggle("show");
-    }
-</script>
+    <div class="glow" id="mouse-glow"></div>
+
+    <header>
+        <nav class="nav">
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <a class="logo" href="https://dnb95.github.io/1STMG/">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Dan_Bouillet.png" alt="dan_reviz">
+            </a>
+
+            <div class="menu" id="menu">
+                <a href="https://dnb95.github.io/1STMG/more/dan_ia.html">Dan IA</a>
+                <a href="https://dnb95.github.io/1STMG/more/contact.html">Contact</a>
+                <a href="https://dnb95.github.io/1STMG/more/a_propos.html">À propos</a>
+            </div>
+        </nav>
+    </header>
+
+    <h1>Bienvenue sur Dan Reviz</h1>
+    
+    <div class="container">
+        <div class="grid">
+            <a class="box" href="pages/menteur.html"><img src="https://i.ibb.co/hRRcjcB2/m-6.png" alt="Menteur"></a>
+            <a class="box" href="pages/jeunes.html"><img src="https://i.ibb.co/Y75yjR2M/m-5.png" alt="Jeunes"></a>
+            <a class="box" href="pages/vif.html"><img src="https://i.ibb.co/cSpCRm2b/m-7.png" alt="Vif"></a>
+            <a class="box" href="pages/femme.html"><img src="https://i.ibb.co/TBm6rCXg/m-8.png" alt="Femme"></a>
+            <a class="box" href="pages/servitude.html"><img src="https://i.ibb.co/JF3vkKY6/m-9.png" alt="Servitude"></a>
+            <a class="box" href="pages/not_yet.html"><img src="https://i.ibb.co/CpBHvvWn/m-4.png" alt="Not Yet"></a>
+            <a class="box" href="pages/not_yet.html"><img src="https://i.ibb.co/CpBHvvWn/m-4.png" alt="Not Yet"></a>
+            <a class="box" href="pages/not_yet.html"><img src="https://i.ibb.co/CpBHvvWn/m-4.png" alt="Not Yet"></a>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("menu").classList.toggle("show");
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            const glow = document.getElementById('mouse-glow');
+            glow.style.left = `${e.clientX}px`;
+            glow.style.top = `${e.clientY}px`;
+        });
+    </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
